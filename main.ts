@@ -1,6 +1,9 @@
 function jaune () {
     pins.digitalWritePin(DigitalPin.P1, 1)
 }
+input.onButtonPressed(Button.A, function () {
+    passer = 1
+})
 function attendrejaune2 () {
     pins.digitalWritePin(DigitalPin.P8, 0)
 }
@@ -23,18 +26,24 @@ function passerblanc () {
 function vert () {
     pins.digitalWritePin(DigitalPin.P0, 1)
 }
+let piéton = 0
+let passer = 0
 let temp = 0
 basic.forever(function () {
     temp += 0.025
     Fermer()
     if (temp < 5) {
         rouge()
-        if (temp > 4) {
-            if (temp * 5 % 1 < 0.5) {
-                attendrejaune()
+        if (piéton == 1) {
+            if (temp > 4) {
+                if (temp * 5 % 1 < 0.5) {
+                    attendrejaune()
+                }
+            } else {
+                passerblanc()
             }
         } else {
-            passerblanc()
+            attendrejaune()
         }
     } else if (temp < 10) {
         vert()
@@ -44,5 +53,11 @@ basic.forever(function () {
         attendrejaune()
     } else {
         temp = 0
+        if (passer == 1) {
+            piéton = 1
+            passer = 0
+        } else {
+            piéton = 0
+        }
     }
 })
