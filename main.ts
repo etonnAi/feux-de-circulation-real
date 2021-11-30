@@ -30,6 +30,13 @@ let piéton = 0
 let passer = 0
 let temp = 0
 basic.forever(function () {
+    if (piéton == 1 && temp < 5) {
+        basic.showNumber(Math.round(5 - temp))
+    } else {
+        basic.clearScreen()
+    }
+})
+basic.forever(function () {
     temp += 0.025
     Fermer()
     if (temp < 5) {
